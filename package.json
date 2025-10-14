@@ -1,0 +1,22 @@
+{
+  "name": "bienes-raices-sena",
+  "version": "1.0.0",
+  "description": "Proyecto de Bienes Raices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsebastiandq/bienesraices-3002085.git"
+  },
+  "author": "J. Sebastian Duque",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsebastiandq/bienesraices-3002085/issues"
+  },
+  "homepage": "https://github.com/jsebastiandq/bienesraices-3002085#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
