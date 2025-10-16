@@ -14,6 +14,14 @@ Instalar dependencias
 
 ## Iniciar modo desarrollo
 
+Modo de desarrollo para Node
+
 ```bash
   npm run dev
+```
+
+Modo de desarrollo para los CSS
+
+```bash
+  npm run css
 ```
