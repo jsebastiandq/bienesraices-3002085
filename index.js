@@ -5,6 +5,7 @@ import db from "./config/db.js";
 // Crear APP
 const app = express();
 
+
 // Conexion a la DB
 try {
   await db.authenticate();
