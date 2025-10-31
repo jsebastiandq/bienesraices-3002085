@@ -5,14 +5,17 @@ import db from "./config/db.js";
 // Crear APP
 const app = express();
 
-
 // Conexion a la DB
 try {
   await db.authenticate();
+  db.sync();
   console.log("La conexion es correcta a la DB");
 } catch (error) {
   console.error("No se puede conectar", error);
 }
+
+// Habilitar lectura de los forms
+app.use(express.urlencoded({ extended: true }));
 
 // Habilitar Pug
 app.set("view engine", "pug");
