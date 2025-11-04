@@ -35,12 +35,22 @@ const registrar = async (req, res) => {
     .withMessage("La contraseña no es igual")
     .run(req);
 
-  // Verificar que el resultado este vacio
-
   let resultado = validationResult(req);
-  res.json(resultado.array());
 
-  //const usuarios = await Usuario.create(req.body);
+  // Verificar que el resultado este vacio
+  if (!resultado.isEmpty()) {
+    // Errores
+    return res.render("auth/registro", {
+      tituloPagina: "Registro de Usuario",
+      errores: resultado.array(),
+      usuario: {
+        nombre: req.body.nombre,
+        email: req.body.email,
+      },
+    });
+  }
+  const usuarios = await Usuario.create(req.body);
+  res.json(usuarios);
 };
 
 const formularioOlvidePassword = (req, res) => {
