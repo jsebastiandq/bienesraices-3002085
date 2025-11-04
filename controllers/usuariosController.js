@@ -49,6 +49,25 @@ const registrar = async (req, res) => {
       },
     });
   }
+
+  // Extraer los datos
+  const { nombre, email, password } = req.body;
+
+  // Validar que el usuario no exista
+  const existeUsuario = await Usuario.findOne({
+    where: { email },
+  });
+  if (existeUsuario) {
+    return res.render("auth/registro", {
+      tituloPagina: "Registro de Usuario",
+      errores: [{ msg: "El usuario ya existe" }],
+      usuario: {
+        nombre: req.body.nombre,
+        email: req.body.email,
+      },
+    });
+  }
+
   const usuarios = await Usuario.create(req.body);
   res.json(usuarios);
 };
