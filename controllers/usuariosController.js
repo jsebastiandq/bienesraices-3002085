@@ -1,4 +1,5 @@
 import { check, validationResult } from "express-validator";
+import bcrypt from "bcrypt";
 import Usuario from "../models/Usuarios.js";
 
 const formularioLogin = (req, res) => {
@@ -68,7 +69,13 @@ const registrar = async (req, res) => {
     });
   }
 
-  const usuarios = await Usuario.create(req.body);
+  const usuarios = await Usuario.create({
+    nombre,
+    email,
+    password,
+    token: 123,
+  });
+
   res.json(usuarios);
 };
 
