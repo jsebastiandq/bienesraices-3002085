@@ -1,5 +1,6 @@
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
+import { generarId } from "../helpers/tokens.js";
 import Usuario from "../models/Usuarios.js";
 
 const formularioLogin = (req, res) => {
@@ -73,7 +74,7 @@ const registrar = async (req, res) => {
     nombre,
     email,
     password,
-    token: 123,
+    token: generarId(),
   });
 
   res.json(usuarios);
