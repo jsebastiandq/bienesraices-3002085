@@ -135,10 +135,33 @@ const formularioOlvidePassword = (req, res) => {
   });
 };
 
+const resetPassword = async (req, res) => {
+  // Validaciones
+  await check("email")
+    .isEmail()
+    .withMessage("Esto no parece un correo")
+    .run(req);
+
+  let resultado = validationResult(req);
+
+  // Verificar que el resultado este vacio
+  if (!resultado.isEmpty()) {
+    // Errores
+    return res.render("auth/olvide-password", {
+      tituloPagina: "Olvide contraseña",
+      errores: resultado.array(),
+      csrfToken: req.csrfToken(),
+    });
+  }
+
+  console.log(req.body.email);
+};
+
 export {
   formularioLogin,
   formularioRegistro,
   registrar,
   confirmar,
   formularioOlvidePassword,
+  resetPassword,
 };
