@@ -2,6 +2,7 @@ import { check, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import { generarId } from "../helpers/tokens.js";
 import Usuario from "../models/Usuarios.js";
+import { emailRegistro } from "../helpers/emails.js";
 
 const formularioLogin = (req, res) => {
   res.render("auth/login", {
@@ -77,10 +78,48 @@ const registrar = async (req, res) => {
     token: generarId(),
   });
 
+  // Enviar el email
+  emailRegistro({
+    nombre: usuarios.nombre,
+    email: usuarios.email,
+    token: usuarios.token,
+  });
+
   // Mostrar mensaje de Confirmación
   res.render("templates/mensaje", {
     tituloPagina: "Cuenta Creada",
     mensaje: "Se ha enviado un correo de confirmación, Da clic en el enlace.",
+  });
+};
+
+// Funcion que va a confirmar el correo
+const confirmar = async (req, res) => {
+  const { token } = req.params;
+
+  console.log(token);
+
+  // Validar el token sea verdadero
+  const usuario = await Usuario.findOne({ where: { token } });
+
+  console.log(usuario);
+
+  // Confirmar la cuenta
+  if (!usuario) {
+    return res.render("auth/confirmar-cuenta", {
+      tituloPagina: "Error al crear cuenta",
+      mensaje: "Hubo un error al confirmar tu cuenta, Intentalo de nuevo",
+      error: true,
+    });
+  }
+
+  //Validar la informacion y mandarla a la DB
+  usuario.token = null;
+  usuario.confirmado = true;
+  await usuario.save();
+
+  res.render("auth/confirmar-cuenta", {
+    tituloPagina: "Cuenta confirmada",
+    mensaje: "La cuenta se confirmó correctamente",
   });
 };
 
@@ -94,5 +133,6 @@ export {
   formularioLogin,
   formularioRegistro,
   registrar,
+  confirmar,
   formularioOlvidePassword,
 };
