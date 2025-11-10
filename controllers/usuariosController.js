@@ -7,12 +7,15 @@ import { emailRegistro } from "../helpers/emails.js";
 const formularioLogin = (req, res) => {
   res.render("auth/login", {
     tituloPagina: "Inicio de Sesión",
+    csrfToken: req.csrfToken(),
   });
 };
 
 const formularioRegistro = (req, res) => {
+  console.log(req.csrfToken());
   res.render("auth/registro", {
     tituloPagina: "Registro de Usuario",
+    csrfToken: req.csrfToken(),
   });
 };
 
@@ -46,6 +49,7 @@ const registrar = async (req, res) => {
     return res.render("auth/registro", {
       tituloPagina: "Registro de Usuario",
       errores: resultado.array(),
+      csrfToken: req.csrfToken(),
       usuario: {
         nombre: req.body.nombre,
         email: req.body.email,
@@ -63,6 +67,7 @@ const registrar = async (req, res) => {
   if (existeUsuario) {
     return res.render("auth/registro", {
       tituloPagina: "Registro de Usuario",
+      csrfToken: req.csrfToken(),
       errores: [{ msg: "El usuario ya existe" }],
       usuario: {
         nombre: req.body.nombre,
@@ -126,6 +131,7 @@ const confirmar = async (req, res) => {
 const formularioOlvidePassword = (req, res) => {
   res.render("auth/olvide-password", {
     tituloPagina: "Olvide Contraseña",
+    csrfToken: req.csrfToken(),
   });
 };
 
