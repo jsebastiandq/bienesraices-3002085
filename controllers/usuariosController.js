@@ -11,6 +11,33 @@ const formularioLogin = (req, res) => {
   });
 };
 
+const autenticar = async (req, res) => {
+  // Validación
+  await check("email")
+    .isEmail()
+    .withMessage("El correo es obligatorio")
+    .run(req);
+
+  await check("password")
+    .notEmpty()
+    .withMessage("La contraseña no puede estar vacia")
+    .run(req);
+
+  let resultado = validationResult(req);
+
+  // Verificar que el resultado este vacio
+  if (!resultado.isEmpty()) {
+    // Errores
+    return res.render("auth/login", {
+      tituloPagina: "Iniciar Sesion",
+      errores: resultado.array(),
+      csrfToken: req.csrfToken(),
+    });
+  }
+
+  console.log("Validando la sesion...");
+};
+
 const formularioRegistro = (req, res) => {
   console.log(req.csrfToken());
   res.render("auth/registro", {
@@ -249,6 +276,7 @@ const nuevoPassword = async (req, res) => {
 
 export {
   formularioLogin,
+  autenticar,
   formularioRegistro,
   registrar,
   confirmar,
