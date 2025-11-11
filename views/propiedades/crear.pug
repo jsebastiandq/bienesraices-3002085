@@ -1,0 +1,55 @@
+extends ../layout/index
+
+block contenido
+    .py-10
+        h1.text-4xl.my-10.font-extrabold.text-center Bienes Raices 
+            span.font-normal SENA
+        h2.text-center.text-2xl.font-extrabold=tituloPagina
+
+        div(class="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10")
+            form.space-y-0(method="POST" action="/propiedades/crear")
+            .space-y-5 
+                h3.text-lg.leading-6.font-medium.text-gray-900 Información General 
+                p.text-gray-600 Añade la información sobre la propiedad en venta
+                div 
+                    label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="titulo") Titulo de la Propiedad
+                    input#titulo.w-full.px-3.py-2.border.border-gray-300.rounded-mb.placeholder-gray-400(placeholder="Ej. Casa de Campo" type="text" name="titulo")
+                div 
+                    label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="descripcion") Descripcion
+                    textarea#descripcion.w-full.px-3.py-2.border.border-gray-300.rounded-mb.placeholder-gray-400(placeholder="Descripcion completa de la propiedad" name="descripcion")
+
+                div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                    div(class="md:w-1/2")
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="categoria") Categoria
+                        select#categoria.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="categoria")
+                                option(value="") CATEGORIA
+
+                    div(class="md:w-1/2")
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="precio") Precio
+                        select#precio.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="precio")
+                                option(value="") PRECIO
+
+                div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+                        div(class="md:w-1/3")
+                            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="habitaciones") Habitaciones
+                            select#habitaciones.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="habitaciones")
+                                option(value="") HABITACIONES
+                        div(class="md:w-1/3")
+                            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="parqueaderos") Parqueaderos
+                            select#parqueaderos.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="parqueaderos")
+                                option(value="") PARQUEADEROS
+                        div(class="md:w-1/3")
+                            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="wc") Baños
+                            select#wc.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="wc")
+                                option(value="") BAÑOS
+
+                div.border-gray-200.border-t.py-5.space-y-5
+                        h3.text-lg.leading-6.font-medium.text-gray-900 Ubicación
+                        p.text-gray-600 Ubica la propiedad en el mapa
+                        #mapa.h-96
+
+                input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="submit" value="Añadir Imagen")
+                    
+
+                
