@@ -1,6 +1,8 @@
 import { exit } from "node:process";
 import categoria from "./categoria.js";
+import precio from "./precio.js";
 import Categorias from "../models/Categorias.js";
+import Precios from "../models/Precios.js";
 import db from "../config/db.js";
 
 const importarDatos = async () => {
@@ -12,7 +14,31 @@ const importarDatos = async () => {
     await db.sync();
 
     //Insertar los datos
-    await Categorias.bulkCreate(categoria);
+    await Promise.all([
+      Categorias.bulkCreate(categoria),
+      Precios.bulkCreate(precio),
+    ]);
+
+    console.log("Datos importados correctamente");
+    exit();
+  } catch (error) {
+    console.log(error);
+    exit(1);
+  }
+};
+
+const eliminarDatos = async () => {
+  try {
+    //Opcion 1
+    // await Promise.all([
+    //   Categorias.destroy({ where: {} }),
+    //   Precios.destroy({ where: {} }),
+    // ]);
+
+    //Opcion Recomendada
+    await db.sync({ force: true });
+    console.log("Eliminado correctamente!");
+    exit();
   } catch (error) {
     console.log(error);
     exit(1);
@@ -21,4 +47,8 @@ const importarDatos = async () => {
 
 if (process.argv[2] === "-i") {
   importarDatos();
+}
+
+if (process.argv[2] === "-e") {
+  eliminarDatos();
 }
