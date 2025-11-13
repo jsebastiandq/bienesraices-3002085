@@ -247,6 +247,9 @@
   .inline-block {
     display: inline-block;
   }
+  .h-9 {
+    height: calc(var(--spacing) * 9);
+  }
   .h-96 {
     height: calc(var(--spacing) * 96);
   }
