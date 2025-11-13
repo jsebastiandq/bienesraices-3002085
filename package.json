@@ -10,6 +10,7 @@
     "styles": "concurrently \"npm run css\" \"npm run js\"",
     "css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/style.css --watch",
     "js": "webpack --watch",
+    "db:importar" : "node ./seed/seeder.js -i",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
