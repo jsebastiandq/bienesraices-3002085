@@ -1,4 +1,5 @@
 import { Precios, Categorias, Usuarios, Propiedades } from "../models/index.js";
+import { validationResult } from "express-validator";
 
 const admin = (req, res) => {
   res.render("propiedades/admin", {
@@ -21,7 +22,31 @@ const crear = async (req, res) => {
     categorias,
     precios,
     headerAdmin: true,
+    datos: {},
   });
 };
 
-export { admin, crear };
+const guardar = async (req, res) => {
+  // Validación
+  let resultado = validationResult(req);
+
+  if (!resultado.isEmpty()) {
+    // Consultar el modelo de Precio y Categorias
+    const [categorias, precios] = await Promise.all([
+      Categorias.findAll(),
+      Precios.findAll(),
+    ]);
+
+    // Errores
+    return res.render("propiedades/crear", {
+      tituloPagina: "Crear una Propiedad",
+      csrfToken: req.csrfToken(),
+      categorias,
+      precios,
+      errores: resultado.array(),
+      datos: req.body,
+    });
+  }
+};
+
+export { admin, crear, guardar };
