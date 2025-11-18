@@ -1,5 +1,4 @@
-import Categoria from "../models/Categorias.js";
-import Precio from "../models/Precios.js";
+import { Precios, Categorias, Usuarios, Propiedades } from "../models/index.js";
 
 const admin = (req, res) => {
   res.render("propiedades/admin", {
@@ -12,8 +11,8 @@ const admin = (req, res) => {
 const crear = async (req, res) => {
   // Consultar el modelo de Precio y Categorias
   const [categorias, precios] = await Promise.all([
-    Categoria.findAll(),
-    Precio.findAll(),
+    Categorias.findAll(),
+    Precios.findAll(),
   ]);
 
   res.render("propiedades/crear", {
