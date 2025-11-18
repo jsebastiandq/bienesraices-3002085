@@ -11,6 +11,9 @@ const precios = [
   {
     nombre: "$20.000.000 COP - $30.000.000 COP",
   },
+  {
+    nombre: "$30.000.000 COP - $50.000.000 COP",
+  },
 ];
 
 export default precios;
