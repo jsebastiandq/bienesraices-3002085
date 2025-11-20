@@ -21,7 +21,7 @@ router.post(
   body("habitaciones")
     .isNumeric()
     .withMessage("Selecciona la Cantidad de Habitaciones"),
-  body("estacionamiento")
+  body("parqueaderos")
     .isNumeric()
     .withMessage("Selecciona la Cantidad de Estacionamientos"),
   body("wc").isNumeric().withMessage("Selecciona la Cantidad de Baños"),
