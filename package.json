@@ -10,8 +10,8 @@
     "styles": "concurrently \"npm run css\" \"npm run js\"",
     "css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/style.css --watch",
     "js": "webpack --watch",
-    "db:importar" : "node ./seed/seeder.js -i",
-    "db:eliminar" : "node ./seed/seeder.js -e",
+    "db:importar": "node ./seed/seeder.js -i",
+    "db:eliminar": "node ./seed/seeder.js -e",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +29,7 @@
     "cookie-parser": "^1.4.7",
     "csurf": "^1.11.0",
     "dotenv": "^17.2.3",
+    "dropzone": "^6.0.0-beta.2",
     "express": "^5.1.0",
     "express-validator": "^7.3.0",
     "jsonwebtoken": "^9.0.2",
