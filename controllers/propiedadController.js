@@ -87,6 +87,7 @@ const guardar = async (req, res) => {
 };
 
 const agregarImagen = async (req, res) => {
+  const { id } = req.params;
   res.render("propiedades/agregar-imagen", {
     tituloPagina: "Agregar una imagen",
     csrfToken: req.csrfToken(),
