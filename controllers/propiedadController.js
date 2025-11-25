@@ -1,11 +1,55 @@
 import { Precios, Categorias, Usuarios, Propiedades } from "../models/index.js";
 import { validationResult } from "express-validator";
 
-const admin = (req, res) => {
-  res.render("propiedades/admin", {
-    tituloPagina: "Mis propiedades",
-    csrfToken: req.csrfToken(),
-  });
+const admin = async (req, res) => {
+  // Leer QueryString
+  const { pagina: paginaActual } = req.query;
+
+  const expresion = /^[1-9]$/;
+
+  if (!expresion.test(paginaActual)) {
+    return res.redirect("/mis-propiedades?pagina=1");
+  }
+
+  try {
+    const { id } = req.usuario;
+
+    // Limites y Offset para el paginador
+    const limit = 10;
+    const offset = paginaActual * limit - limit;
+
+    const [propiedades, total] = await Promise.all([
+      Propiedades.findAll({
+        limit,
+        offset,
+        where: {
+          usuarioId: id,
+        },
+        include: [
+          { model: Categorias, as: "categoria" },
+          { model: Precios, as: "precio" },
+        ],
+      }),
+      Propiedades.count({
+        where: {
+          usuarioId: id,
+        },
+      }),
+    ]);
+
+    res.render("propiedades/admin", {
+      pagina: "Mis Propiedades",
+      propiedades,
+      csrfToken: req.csrfToken(),
+      paginas: Math.ceil(total / limit),
+      paginaActual: Number(paginaActual),
+      total,
+      offset,
+      limit,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const crear = async (req, res) => {
