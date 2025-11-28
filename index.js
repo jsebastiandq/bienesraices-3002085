@@ -1,6 +1,7 @@
 import express from "express";
 import csurf from "csurf";
 import cookieParser from "cookie-parser";
+import apiRoutes from "./routes/apiRoutes.js";
 import appRoutes from "./routes/appRoutes.js";
 import usuarioRoutes from "./routes/usuariosRoutes.js";
 import propiedadesRoutes from "./routes/propiedadesRoutes.js";
@@ -35,9 +36,10 @@ app.set("views", "./views");
 app.use(express.static("public"));
 
 // Routing
-app.use("/", appRoutes  );
+app.use("/", appRoutes);
 app.use("/auth", usuarioRoutes);
 app.use("/", propiedadesRoutes);
+app.use("/api", apiRoutes);
 
 // Definir el puerto
 const port = process.env.PORT || 3000;
