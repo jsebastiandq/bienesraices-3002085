@@ -1,5 +1,9 @@
 import express from "express";
-import { inicio, categoria } from "../controllers/appController.js";
+import {
+  inicio,
+  categoria,
+  noEncontrado,
+} from "../controllers/appController.js";
 
 const router = express.Router();
 
@@ -8,5 +12,8 @@ router.get("/", inicio);
 
 // Categorias
 router.get("/categorias/:id", categoria);
+
+//Pagina 404
+router.get("/404", noEncontrado);
 
 export default router;

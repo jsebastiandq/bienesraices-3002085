@@ -67,4 +67,11 @@ const categoria = async (req, res) => {
   });
 };
 
-export { inicio, categoria };
+const noEncontrado = (req, res) => {
+  res.render("404", {
+    pagina: "No Encontrada",
+    csrfToken: req.csrfToken(),
+  });
+};
+
+export { inicio, categoria, noEncontrado };
