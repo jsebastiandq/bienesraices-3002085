@@ -11,6 +11,8 @@ import {
   eliminar,
   cambiarEstado,
   mostrarPropiedad,
+  enviarMensaje,
+  verMensajes,
 } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
 import identificarUsuario from "../middleware/identificarUsuario.js";
@@ -80,5 +82,17 @@ router.put("/propiedades/:id", protegerRuta, cambiarEstado);
 
 // Propiedad Independiente
 router.get("/propiedad/:id", identificarUsuario, mostrarPropiedad);
+
+// Almacenar los mensajes
+router.post(
+  "/propiedad/:id",
+  identificarUsuario,
+  body("mensaje")
+    .isLength({ min: 20 })
+    .withMessage("El Mensaje no puede ir vacio o es muy corto"),
+  enviarMensaje
+);
+
+router.get("/mensajes/:id", protegerRuta, verMensajes);
 
 export default router;
