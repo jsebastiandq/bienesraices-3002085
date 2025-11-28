@@ -43,4 +43,28 @@ const inicio = async (req, res) => {
   });
 };
 
-export { inicio };
+const categoria = async (req, res) => {
+  const { id } = req.params;
+
+  // Comprobar que la categoria exista
+  const categoria = await Categorias.findByPk(id);
+  if (!categoria) {
+    return res.redirect("/404");
+  }
+
+  // Obtener las propiedades de la categoria
+  const propiedades = await Propiedades.findAll({
+    where: {
+      categoriaId: id,
+    },
+    include: [{ model: Precios, as: "precio" }],
+  });
+
+  res.render("categoria", {
+    pagina: `${categoria.nombre}s en Venta`,
+    propiedades,
+    csrfToken: req.csrfToken(),
+  });
+};
+
+export { inicio, categoria };
