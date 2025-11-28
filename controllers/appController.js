@@ -74,4 +74,29 @@ const noEncontrado = (req, res) => {
   });
 };
 
-export { inicio, categoria, noEncontrado };
+const buscador = async (req, res) => {
+  const { termino } = req.body;
+
+  // Validar que termino no este vacio
+  if (!termino.trim()) {
+    return res.redirect("back");
+  }
+
+  // Consultar las propiedades
+  const propiedades = await Propiedades.findAll({
+    where: {
+      titulo: {
+        [Sequelize.Op.like]: "%" + termino + "%",
+      },
+    },
+    include: [{ model: Precios, as: "precio" }],
+  });
+
+  res.render("busqueda", {
+    pagina: "Resultados de la Búsqueda",
+    propiedades,
+    csrfToken: req.csrfToken(),
+  });
+};
+
+export { inicio, categoria, noEncontrado, buscador };
