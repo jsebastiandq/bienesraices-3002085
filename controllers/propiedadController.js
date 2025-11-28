@@ -335,6 +335,31 @@ const cambiarEstado = async (req, res) => {
   });
 };
 
+// Muestra una propiedad
+const mostrarPropiedad = async (req, res) => {
+  const { id } = req.params;
+
+  // Comprobar que la propiedad exista
+  const propiedad = await Propiedades.findByPk(id, {
+    include: [
+      { model: Precios, as: "precio" },
+      { model: Categorias, as: "categoria", scope: "eliminarPassword" },
+    ],
+  });
+
+  if (!propiedad || !propiedad.publicado) {
+    return res.redirect("/404");
+  }
+
+  res.render("propiedades/mostrar", {
+    propiedad,
+    pagina: propiedad.titulo,
+    csrfToken: req.csrfToken(),
+    usuario: req.usuario,
+    //esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId),
+  });
+};
+
 export {
   admin,
   crear,
@@ -345,4 +370,5 @@ export {
   guardarCambios,
   eliminar,
   cambiarEstado,
+  mostrarPropiedad,
 };

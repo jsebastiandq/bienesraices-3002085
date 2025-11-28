@@ -10,8 +10,10 @@ import {
   guardarCambios,
   eliminar,
   cambiarEstado,
+  mostrarPropiedad,
 } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
+import identificarUsuario from "../middleware/identificarUsuario.js";
 import upload from "../middleware/subirImagen.js";
 
 const router = express.Router();
@@ -75,5 +77,8 @@ router.post(
 
 router.post("/propiedades/eliminar/:id", protegerRuta, eliminar);
 router.put("/propiedades/:id", protegerRuta, cambiarEstado);
+
+// Propiedad Independiente
+router.get("/propiedad/:id", identificarUsuario, mostrarPropiedad);
 
 export default router;
